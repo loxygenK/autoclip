@@ -64,10 +64,10 @@ fn run(config: &Config, plugins_path: &PathBuf) -> Result<()> {
 
     let mut previous = String::new();
 
+    let mut clipboard = Clipboard::open().map_err(Error::Clipboard)?;
     loop {
         sleep(Duration::from_millis(config.polling_interval));
 
-        let mut clipboard = Clipboard::open().map_err(Error::Clipboard)?;
         let contents = clipboard.read_text().map_err(Error::Clipboard)?;
 
         if contents == previous {
